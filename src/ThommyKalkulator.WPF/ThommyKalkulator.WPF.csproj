@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Converters\" />
+    <Folder Include="Behaviors\" />
+    <Folder Include="Resources\Themes\" />
+    <Folder Include="Resources\Styles\" />
+    <Folder Include="Views\Controls\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ThommyKalkulator.Application\ThommyKalkulator.Application.csproj" />
+    <ProjectReference Include="..\ThommyKalkulator.Infrastructure\ThommyKalkulator.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

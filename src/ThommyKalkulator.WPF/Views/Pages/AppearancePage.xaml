@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="ThommyKalkulator.WPF.Views.Pages.AppearancePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ThommyKalkulator.WPF.ViewModels.Pages"
+             mc:Ignorable="d"
+             d:DesignHeight="700"
+             d:DesignWidth="1200">
+
+    <UserControl.DataContext>
+        <vm:AppearanceViewModel />
+    </UserControl.DataContext>
+
+    <Grid Margin="20">
+        <Border Padding="16"
+                Background="{DynamicResource CardBrush}"
+                BorderBrush="{DynamicResource BorderBrush}"
+                BorderThickness="1"
+                CornerRadius="8">
+            <StackPanel>
+                <TextBlock Text="{Binding PageTitle}"
+                           FontSize="28"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,8" />
+                <TextBlock Text="{Binding PageDescription}"
+                           Foreground="{DynamicResource SecondaryTextBrush}"
+                           Margin="0,0,0,16"
+                           TextWrapping="Wrap" />
+                <TextBlock Text="Später kommen hier Theme- und Anzeigeoptionen hinein." />
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

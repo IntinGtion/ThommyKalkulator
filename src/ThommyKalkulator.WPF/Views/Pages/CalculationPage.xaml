@@ -1,0 +1,538 @@
+<UserControl x:Class="ThommyKalkulator.WPF.Views.Pages.CalculationPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="900"
+             d:DesignWidth="1400"
+             Background="{DynamicResource WindowBackgroundBrush}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="420" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Margin="0,0,16,0">
+                <TextBlock Text="{Binding PageTitle}"
+                           FontSize="28"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,8" />
+
+                <TextBlock Text="{Binding PageDescription}"
+                           Foreground="{DynamicResource SecondaryTextBrush}"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,20" />
+
+                <Border Margin="0,0,0,16"
+                        Padding="16"
+                        Background="{DynamicResource CardBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock Text="Projektdaten"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,16" />
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Projektnummer" VerticalAlignment="Center" Margin="0,0,12,12" />
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ProjectNumber, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,16,12" Padding="8,6" />
+
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="Stückzahl" VerticalAlignment="Center" Margin="0,0,12,12" />
+                            <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding QuantityText, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" Padding="8,6" />
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Positionsname" VerticalAlignment="Center" Margin="0,0,12,12" />
+                            <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding PositionName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" Padding="8,6" />
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Notiz" VerticalAlignment="Top" Margin="0,4,12,0" />
+                            <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"
+                                     Text="{Binding Note, UpdateSourceTrigger=PropertyChanged}"
+                                     AcceptsReturn="True"
+                                     TextWrapping="Wrap"
+                                     VerticalScrollBarVisibility="Auto"
+                                     MinHeight="80" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Margin="0,0,0,16"
+                        Padding="16"
+                        Background="{DynamicResource CardBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock Text="Maschinen"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,6" />
+
+                        <TextBlock Text="Die Stammdaten kommen direkt aus dem Einstellungen-Tab."
+                                   Foreground="{DynamicResource SecondaryTextBrush}"
+                                   Margin="0,0,0,16" />
+
+
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="130" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="120" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="1" Text="Maschine" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="2" Text="Laufzeit" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="3" Text="Strom / h" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="4" Text="Verschleiß / h" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="5" Text="Gesamt" FontWeight="SemiBold" />
+                        </Grid>
+
+                        <ItemsControl ItemsSource="{Binding Machines}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="120" />
+                                            <ColumnDefinition Width="130" />
+                                            <ColumnDefinition Width="150" />
+                                            <ColumnDefinition Width="120" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <CheckBox Grid.Column="0"
+                                                  IsChecked="{Binding IsSelected}"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center" />
+
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{Binding Name}"
+                                                   VerticalAlignment="Center"
+                                                   Margin="0,0,8,0" />
+
+                                        <TextBox Grid.Column="2"
+                                                 Text="{Binding RuntimeHoursText, UpdateSourceTrigger=PropertyChanged}"
+                                                 Margin="0,0,8,0"
+                                                 Padding="8,6" />
+
+                                        <Border Grid.Column="3"
+                                                Background="{DynamicResource SurfaceBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="6"
+                                                Padding="8,6"
+                                                Margin="0,0,8,0">
+                                            <TextBlock Text="{Binding PowerPerHourText}"
+                                                       HorizontalAlignment="Right"
+                                                       VerticalAlignment="Center" />
+                                        </Border>
+
+                                        <Border Grid.Column="4"
+                                                Background="{DynamicResource SurfaceBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="6"
+                                                Padding="8,6"
+                                                Margin="0,0,8,0">
+                                            <TextBlock Text="{Binding WearPerHourText}"
+                                                       HorizontalAlignment="Right"
+                                                       VerticalAlignment="Center" />
+                                        </Border>
+
+                                        <Border Grid.Column="5"
+                                                Background="{DynamicResource SurfaceBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="6"
+                                                Padding="8,6">
+                                            <TextBlock Text="{Binding TotalCostText}"
+                                                       HorizontalAlignment="Right"
+                                                       VerticalAlignment="Center" />
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <Border Margin="0,0,0,16"
+                        Padding="16"
+                        Background="{DynamicResource CardBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock Text="Materialien"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,6" />
+
+                        <TextBlock Text="Die Stammdaten kommen direkt aus dem Materialien-Tab."
+                                   Foreground="{DynamicResource SecondaryTextBrush}"
+                                   Margin="0,0,0,16" />
+
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="110" />
+                                <ColumnDefinition Width="90" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="120" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="1" Text="Material" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="2" Text="Menge" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="3" Text="Einheit" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="4" Text="Preis / Einheit" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="5" Text="Gesamt" FontWeight="SemiBold" />
+                        </Grid>
+
+                        <ItemsControl ItemsSource="{Binding Materials}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="110" />
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="150" />
+                                            <ColumnDefinition Width="120" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <CheckBox Grid.Column="0"
+                                                  IsChecked="{Binding IsSelected}"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center" />
+
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{Binding Name}"
+                                                   VerticalAlignment="Center"
+                                                   Margin="0,0,8,0" />
+
+                                        <TextBox Grid.Column="2"
+                                                 Text="{Binding QuantityText, UpdateSourceTrigger=PropertyChanged}"
+                                                 Margin="0,0,8,0"
+                                                 Padding="8,6" />
+
+                                        <Border Grid.Column="3"
+                                                Background="{DynamicResource SurfaceBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="6"
+                                                Padding="8,6"
+                                                Margin="0,0,8,0">
+                                            <TextBlock Text="{Binding Unit}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center" />
+                                        </Border>
+
+                                        <Border Grid.Column="4"
+                                                Background="{DynamicResource SurfaceBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="6"
+                                                Padding="8,6"
+                                                Margin="0,0,8,0">
+                                            <TextBlock Text="{Binding UnitPriceText}"
+                                                       HorizontalAlignment="Right"
+                                                       VerticalAlignment="Center" />
+                                        </Border>
+
+                                        <Border Grid.Column="5"
+                                                Background="{DynamicResource SurfaceBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="6"
+                                                Padding="8,6">
+                                            <TextBlock Text="{Binding TotalCostText}"
+                                                       HorizontalAlignment="Right"
+                                                       VerticalAlignment="Center" />
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <Border Padding="16"
+                        Background="{DynamicResource CardBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock Text="Arbeitszeit und Zusatzkosten"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,16" />
+
+                        <Grid Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition Width="160" />
+                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition Width="160" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Zeiteinheit" VerticalAlignment="Center" Margin="0,0,12,12" />
+                            <ComboBox Grid.Row="0" Grid.Column="1"
+                                      ItemsSource="{Binding TimeUnits}"
+                                      SelectedItem="{Binding SelectedTimeUnit, Mode=TwoWay}"
+                                      Margin="0,0,16,12" />
+
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="Aufschlag (%)" VerticalAlignment="Center" Margin="0,0,12,12" />
+                            <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding SurchargePercentText, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" Padding="8,6" />
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Vorbereitung" VerticalAlignment="Center" Margin="0,0,12,0" />
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PreparationTimeText, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,16,0" Padding="8,6" />
+
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="Nachbearbeitung" VerticalAlignment="Center" Margin="0,0,12,0" />
+                            <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding PostProcessingTimeText, UpdateSourceTrigger=PropertyChanged}" Padding="8,6" />
+                        </Grid>
+
+                        <Grid Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition Width="160" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="Konstruktion" VerticalAlignment="Center" Margin="0,0,12,0" />
+                            <TextBox Grid.Column="1" Text="{Binding ConstructionTimeText, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,16,0" Padding="8,6" />
+                            <TextBlock Grid.Column="2" Text="Die Kosten werden mit den globalen Stundenlöhnen aus den Einstellungen berechnet."
+                                       VerticalAlignment="Center"
+                                       TextWrapping="Wrap"
+                                       Foreground="{DynamicResource SecondaryTextBrush}" />
+                        </Grid>
+
+                        <DockPanel Margin="0,0,0,12">
+                            <TextBlock Text="Freie Zusatzpositionen"
+                                       FontSize="16"
+                                       FontWeight="SemiBold"
+                                       DockPanel.Dock="Left"
+                                       VerticalAlignment="Center" />
+
+                            <Button Content="Position hinzufügen"
+                                    Command="{Binding AddFreeCostCommand}"
+                                    Padding="12,6"
+                                    HorizontalAlignment="Right"
+                                    DockPanel.Dock="Right" />
+                        </DockPanel>
+
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="140" />
+                                <ColumnDefinition Width="120" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="Bezeichnung" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="1" Text="Betrag" FontWeight="SemiBold" />
+                        </Grid>
+
+                        <ItemsControl ItemsSource="{Binding FreeCosts}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="140" />
+                                            <ColumnDefinition Width="120" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBox Grid.Column="0"
+                                                 Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                                                 Margin="0,0,8,0"
+                                                 Padding="8,6" />
+
+                                        <TextBox Grid.Column="1"
+                                                 Text="{Binding AmountText, UpdateSourceTrigger=PropertyChanged}"
+                                                 Margin="0,0,8,0"
+                                                 Padding="8,6" />
+
+                                        <Button Grid.Column="2"
+                                                Content="Entfernen"
+                                                Padding="10,6"
+                                                Command="{Binding DataContext.RemoveFreeCostCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                CommandParameter="{Binding}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <Border Grid.Column="1"
+                    Padding="16"
+                    Background="{DynamicResource CardBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    VerticalAlignment="Top">
+                <StackPanel>
+                    <TextBlock Text="Zusammenfassung"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,16" />
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Strom gesamt" />
+                        <TextBlock Grid.Column="1" Text="{Binding PowerCostText}" FontWeight="SemiBold" />
+                    </Grid>
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Verschleiß gesamt" />
+                        <TextBlock Grid.Column="1" Text="{Binding WearCostText}" FontWeight="SemiBold" />
+                    </Grid>
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Materialkosten" />
+                        <TextBlock Grid.Column="1" Text="{Binding MaterialCostText}" FontWeight="SemiBold" />
+                    </Grid>
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Vorbereitung" />
+                        <TextBlock Grid.Column="1" Text="{Binding PreparationCostText}" FontWeight="SemiBold" />
+                    </Grid>
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Nachbearbeitung" />
+                        <TextBlock Grid.Column="1" Text="{Binding LaborCostText}" FontWeight="SemiBold" />
+                    </Grid>
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Konstruktion" />
+                        <TextBlock Grid.Column="1" Text="{Binding ConstructionCostText}" FontWeight="SemiBold" />
+                    </Grid>
+
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Zusatzkosten" />
+                        <TextBlock Grid.Column="1" Text="{Binding FreeCostsTotalText}" FontWeight="SemiBold" />
+                    </Grid>
+
+                    <Separator Margin="0,0,0,16" />
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Selbstkosten" />
+                        <TextBlock Grid.Column="1" Text="{Binding CostPriceText}" FontWeight="SemiBold" />
+                    </Grid>
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Aufschlag" />
+                        <TextBlock Grid.Column="1" Text="{Binding SurchargeAmountText}" FontWeight="SemiBold" />
+                    </Grid>
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Einzelpreis"
+                                   FontSize="16"
+                                   FontWeight="SemiBold" />
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding UnitPriceText}"
+                                   FontSize="16"
+                                   FontWeight="Bold" />
+                    </Grid>
+
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Gesamtpreis"
+                                   FontSize="16"
+                                   FontWeight="SemiBold" />
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding TotalPriceText}"
+                                   FontSize="16"
+                                   FontWeight="Bold" />
+                    </Grid>
+
+                    <Button Content="{Binding SaveButtonText}"
+                            Command="{Binding SaveCalculationCommand}"
+                            Padding="12,8"
+                            Margin="0,0,0,8" />
+
+                    <Button Content="Formular leeren"
+                            Command="{Binding ClearFormCommand}"
+                            Padding="12,8" />
+
+                    <Border Margin="0,16,0,0"
+                            Padding="12,8"
+                            Background="{DynamicResource SurfaceBrush}"
+                            BorderBrush="{DynamicResource BorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="8">
+                        <TextBlock Text="{Binding StatusMessage}"
+                                   Foreground="{DynamicResource SecondaryTextBrush}"
+                                   TextWrapping="Wrap" />
+                    </Border>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

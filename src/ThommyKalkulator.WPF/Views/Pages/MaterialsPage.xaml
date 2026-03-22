@@ -1,0 +1,209 @@
+﻿<UserControl x:Class="ThommyKalkulator.WPF.Views.Pages.MaterialsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="700"
+             d:DesignWidth="1200">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0"
+                    Padding="16"
+                    Background="{DynamicResource CardBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                <StackPanel>
+                    <TextBlock Text="Materialtypen"
+                               FontSize="24"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,8" />
+                    <TextBlock Text="Die Typen entsprechen dem Altstand aus mat_types und bleiben einfache String-Werte."
+                               Foreground="{DynamicResource SecondaryTextBrush}"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,16" />
+
+                    <ListBox ItemsSource="{Binding MaterialTypes}"
+                             SelectedItem="{Binding SelectedMaterialType, Mode=TwoWay}"
+                             MinHeight="220"
+                             Margin="0,0,0,12" />
+
+                    <TextBlock Text="Typname"
+                               Margin="0,0,0,6" />
+                    <TextBox Text="{Binding TypeEditorText, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,12" />
+
+                    <UniformGrid Columns="1" Rows="3">
+                        <Button Content="Typ hinzufügen"
+                                Command="{Binding AddTypeCommand}"
+                                Margin="0,0,0,8" />
+                        <Button Content="Typ umbenennen"
+                                Command="{Binding RenameTypeCommand}"
+                                Margin="0,0,0,8" />
+                        <Button Content="Typ löschen"
+                                Command="{Binding DeleteTypeCommand}" />
+                    </UniformGrid>
+                </StackPanel>
+            </Border>
+
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="16" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0"
+                        Padding="16"
+                        Background="{DynamicResource CardBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock Text="{Binding PageTitle}"
+                                   FontSize="28"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,8" />
+                        <TextBlock Text="{Binding PageDescription}"
+                                   Foreground="{DynamicResource SecondaryTextBrush}"
+                                   TextWrapping="Wrap"
+                                   Margin="0,0,0,16" />
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="24" />
+                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Name" VerticalAlignment="Center" Margin="0,0,8,8" />
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding MaterialName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8" />
+
+                            <TextBlock Grid.Row="0" Grid.Column="3" Text="Preis" VerticalAlignment="Center" Margin="0,0,8,8" />
+                            <TextBox Grid.Row="0" Grid.Column="4" Text="{Binding MaterialPriceText, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8" />
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Typ" VerticalAlignment="Center" Margin="0,0,8,8" />
+                            <ComboBox Grid.Row="1" Grid.Column="1"
+                                      ItemsSource="{Binding MaterialTypes}"
+                                      Text="{Binding MaterialType, UpdateSourceTrigger=PropertyChanged}"
+                                      IsEditable="True"
+                                      IsTextSearchEnabled="False"
+                                      Margin="0,0,0,8" />
+
+                            <TextBlock Grid.Row="1" Grid.Column="3" Text="Einheit" VerticalAlignment="Center" Margin="0,0,8,8" />
+                            <ComboBox Grid.Row="1" Grid.Column="4"
+                                      ItemsSource="{Binding UnitSuggestions}"
+                                      Text="{Binding MaterialUnit, UpdateSourceTrigger=PropertyChanged}"
+                                      IsEditable="True"
+                                      IsTextSearchEnabled="False"
+                                      Margin="0,0,0,8" />
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Hersteller" VerticalAlignment="Center" Margin="0,0,8,8" />
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding MaterialManufacturer, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8" />
+
+                            <TextBlock Grid.Row="2" Grid.Column="3" Text="Lieferant" VerticalAlignment="Center" Margin="0,0,8,8" />
+                            <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding MaterialSupplier, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8" />
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Notiz" VerticalAlignment="Top" Margin="0,4,8,0" />
+                            <TextBox Grid.Row="3"
+                                     Grid.Column="1"
+                                     Grid.ColumnSpan="4"
+                                     Text="{Binding MaterialNote, UpdateSourceTrigger=PropertyChanged}"
+                                     AcceptsReturn="True"
+                                     TextWrapping="Wrap"
+                                     VerticalScrollBarVisibility="Auto"
+                                     MinHeight="90" />
+                        </Grid>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                            <Button Content="Material hinzufügen"
+                                    Command="{Binding AddMaterialCommand}"
+                                    Margin="0,0,8,0" />
+                            <Button Content="Material speichern"
+                                    Command="{Binding UpdateMaterialCommand}"
+                                    Margin="0,0,8,0" />
+                            <Button Content="Formular leeren"
+                                    Command="{Binding ClearMaterialFormCommand}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Row="2"
+                        Padding="16"
+                        Background="{DynamicResource CardBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0"
+                                   Text="Materialliste"
+                                   FontSize="22"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,12" />
+
+                        <ListView Grid.Row="1"
+                                  ItemsSource="{Binding Materials}"
+                                  SelectedItem="{Binding SelectedMaterial, Mode=TwoWay}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Name" Width="180" DisplayMemberBinding="{Binding Name}" />
+                                    <GridViewColumn Header="Typ" Width="120" DisplayMemberBinding="{Binding Type}" />
+                                    <GridViewColumn Header="Einheit" Width="90" DisplayMemberBinding="{Binding Unit}" />
+                                    <GridViewColumn Header="Preis" Width="90" DisplayMemberBinding="{Binding PriceText}" />
+                                    <GridViewColumn Header="Hersteller" Width="150" DisplayMemberBinding="{Binding Manufacturer}" />
+                                    <GridViewColumn Header="Lieferant" Width="150" DisplayMemberBinding="{Binding Supplier}" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                        <StackPanel Grid.Row="2"
+                                    Orientation="Horizontal"
+                                    Margin="0,12,0,0">
+                            <Button Content="Ausgewähltes Material löschen"
+                                    Command="{Binding DeleteMaterialCommand}" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <Border Grid.Row="1"
+                Margin="0,16,0,0"
+                Padding="12,8"
+                Background="{DynamicResource SurfaceBrush}"
+                BorderBrush="{DynamicResource BorderBrush}"
+                BorderThickness="1"
+                CornerRadius="8">
+            <TextBlock Text="{Binding StatusMessage}"
+                       Foreground="{DynamicResource SecondaryTextBrush}"
+                       TextWrapping="Wrap" />
+        </Border>
+    </Grid>
+</UserControl>

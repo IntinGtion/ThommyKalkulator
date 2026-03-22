@@ -1,0 +1,239 @@
+﻿<UserControl x:Class="ThommyKalkulator.WPF.Views.Pages.SettingsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ThommyKalkulator.WPF.ViewModels.Pages"
+             mc:Ignorable="d"
+             d:DesignHeight="700"
+             d:DesignWidth="1200"
+             d:DataContext="{d:DesignInstance Type=vm:SettingsViewModel}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Margin="0,0,0,16">
+                <TextBlock Text="{Binding PageTitle}"
+                           FontSize="28"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,8" />
+                <TextBlock Text="{Binding PageDescription}"
+                           Foreground="{DynamicResource SecondaryTextBrush}"
+                           TextWrapping="Wrap" />
+            </StackPanel>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="360" />
+                    <ColumnDefinition Width="16" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0"
+                        Padding="16"
+                        Background="{DynamicResource CardBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock Text="Geräte / Maschinen"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,12" />
+
+                        <ListBox ItemsSource="{Binding Machines}"
+                                 SelectedItem="{Binding SelectedMachine}"
+                                 DisplayMemberPath="Name"
+                                 Height="180"
+                                 Margin="0,0,0,12" />
+
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                            <Button Content="+ Neu"
+                                    Command="{Binding NewMachineCommand}"
+                                    Padding="12,6"
+                                    Margin="0,0,8,0" />
+                            <Button Content="💾 Speichern"
+                                    Command="{Binding SaveMachineCommand}"
+                                    Padding="12,6"
+                                    Margin="0,0,8,0" />
+                            <Button Content="🗑 Löschen"
+                                    Command="{Binding DeleteMachineCommand}"
+                                    Padding="12,6" />
+                        </StackPanel>
+
+                        <TextBlock Text="Parameter des gewählten Geräts"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,12" />
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0"
+                                       Text="Name"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,12,12" />
+                            <TextBox Grid.Row="0" Grid.Column="1"
+                                     Text="{Binding MachineName}"
+                                     Padding="8,6"
+                                     Margin="0,0,0,12" />
+
+                            <TextBlock Grid.Row="1" Grid.Column="0"
+                                       Text="Leistung (Watt)"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,12,12" />
+                            <TextBox Grid.Row="1" Grid.Column="1"
+                                     Text="{Binding MachineWattText}"
+                                     Padding="8,6"
+                                     Margin="0,0,0,12" />
+
+                            <TextBlock Grid.Row="2" Grid.Column="0"
+                                       Text="Kaufpreis (€)"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,12,12" />
+                            <TextBox Grid.Row="2" Grid.Column="1"
+                                     Text="{Binding MachinePurchasePriceText}"
+                                     Padding="8,6"
+                                     Margin="0,0,0,12" />
+
+                            <TextBlock Grid.Row="3" Grid.Column="0"
+                                       Text="Lebensdauer (h)"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,12,0" />
+                            <TextBox Grid.Row="3" Grid.Column="1"
+                                     Text="{Binding MachineLifetimeHoursText}"
+                                     Padding="8,6" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2"
+                        Padding="16"
+                        Background="{DynamicResource CardBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock Text="Globale Einstellungen"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,16" />
+
+                        <Grid Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0"
+                                       Text="Währungssymbol"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,12,12" />
+                            <TextBox Grid.Row="0" Grid.Column="1"
+                                     Text="{Binding Currency}"
+                                     Padding="8,6"
+                                     Margin="0,0,0,12" />
+
+                            <TextBlock Grid.Row="1" Grid.Column="0"
+                                       Text="Strompreis (€/kWh)"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,12,12" />
+                            <TextBox Grid.Row="1" Grid.Column="1"
+                                     Text="{Binding ElectricityPricePerKwhText}"
+                                     Padding="8,6"
+                                     Margin="0,0,0,12" />
+
+                            <TextBlock Grid.Row="2" Grid.Column="0"
+                                       Text="Stundenlohn Arbeit"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,12,12" />
+                            <TextBox Grid.Row="2" Grid.Column="1"
+                                     Text="{Binding LaborRateText}"
+                                     Padding="8,6"
+                                     Margin="0,0,0,12" />
+
+                            <TextBlock Grid.Row="3" Grid.Column="0"
+                                       Text="Stundenlohn Konstruktion"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,12,12" />
+                            <TextBox Grid.Row="3" Grid.Column="1"
+                                     Text="{Binding ConstructionLaborRateText}"
+                                     Padding="8,6"
+                                     Margin="0,0,0,12" />
+
+                            <TextBlock Grid.Row="4" Grid.Column="0"
+                                       Text="Standard-Aufschlag (%)"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,12,12" />
+                            <TextBox Grid.Row="4" Grid.Column="1"
+                                     Text="{Binding DefaultSurchargePercentText}"
+                                     Padding="8,6"
+                                     Margin="0,0,0,12" />
+
+                            <TextBlock Grid.Row="5" Grid.Column="0"
+                                       Text="Logo-Pfad"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,12,0" />
+                            <TextBox Grid.Row="5" Grid.Column="1"
+                                     Text="{Binding LogoPath}"
+                                     Padding="8,6" />
+                        </Grid>
+
+                        <GroupBox Header="Programmverhalten" Margin="0,0,0,16">
+                            <StackPanel Margin="8">
+                                <CheckBox Content="Floating Live-Vorschau im Kalkulationsmodus immer aktiv"
+                                          IsChecked="{Binding FloatingLiveDefault}"
+                                          Margin="0,0,0,8" />
+                                <CheckBox Content="PDF nach dem Exportieren automatisch anzeigen"
+                                          IsChecked="{Binding PdfAutoOpen}" />
+                            </StackPanel>
+                        </GroupBox>
+
+                        <Button Content="💾 Globale Einstellungen speichern"
+                                Command="{Binding SaveGlobalSettingsCommand}"
+                                Padding="12,8"
+                                HorizontalAlignment="Left"
+                                Margin="0,0,0,16" />
+
+                        <TextBlock Text="Stromkosten  = Laufzeit × (Watt÷1000) × Strompreis&#10;Verschleiß   = Laufzeit × (Kaufpreis÷Lebensdauer)&#10;Endpreis     = Selbstkosten × (1 + Aufschlag÷100)"
+                                   FontFamily="Consolas"
+                                   Foreground="{DynamicResource SecondaryTextBrush}"
+                                   TextWrapping="Wrap" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Border Grid.Row="2"
+                    Margin="0,16,0,0"
+                    Padding="12,8"
+                    Background="{DynamicResource SurfaceBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="6">
+                <TextBlock Text="{Binding StatusMessage}"
+                           Foreground="{DynamicResource SecondaryTextBrush}" />
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

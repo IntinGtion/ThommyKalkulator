@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ThommyKalkulator.Application/ThommyKalkulator.Application.csproj" Id="d899e7f9-e5c9-4a22-80b1-9bd892a8430f" />
+    <Project Path="src/ThommyKalkulator.Domain/ThommyKalkulator.Domain.csproj" Id="b49523f3-0093-46c0-857c-92fdc3e1e6f4" />
+    <Project Path="src/ThommyKalkulator.Infrastructure/ThommyKalkulator.Infrastructure.csproj" Id="9072c56d-0c84-47dc-9604-80fe131dab32" />
+    <Project Path="src/ThommyKalkulator.WPF/ThommyKalkulator.WPF.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ThommyKalkulator.Tests/ThommyKalkulator.Tests.csproj" Id="5cb0208d-2627-4305-b5dd-faa43a593ed0" />
+  </Folder>
+</Solution>
