@@ -28,6 +28,7 @@ public sealed class CalculationViewModel : ObservableObject
     private bool _isUpdatingForm;
     private int? _editingProjectIndex;
     private CalculationProject _previewProject = new();
+    private string _floatingPreviewText = "Eingaben vornehmen – Preis wird live berechnet.";
 
     public CalculationViewModel(IAppState appState, ICalculationService calculationService)
     {
@@ -219,6 +220,12 @@ public sealed class CalculationViewModel : ObservableObject
     public string UnitPriceText => FormatMoney(_previewProject.FinalPrice);
 
     public string TotalPriceText => FormatMoney(_previewProject.FinalPrice * _previewProject.Quantity);
+
+    public string FloatingPreviewText
+    {
+        get => _floatingPreviewText;
+        private set => SetProperty(ref _floatingPreviewText, value);
+    }
 
     public IRelayCommand AddFreeCostCommand { get; }
 
@@ -500,6 +507,8 @@ public sealed class CalculationViewModel : ObservableObject
         OnPropertyChanged(nameof(UnitPriceText));
         OnPropertyChanged(nameof(TotalPriceText));
 
+        FloatingPreviewText = BuildFloatingPreviewText(_previewProject, errors);
+
         if (errors.Count == 0)
         {
             StatusMessage = "Vorschau aktualisiert.";
@@ -669,6 +678,78 @@ public sealed class CalculationViewModel : ObservableObject
 
         normalized = normalized.Replace(',', '.');
         return decimal.TryParse(normalized, NumberStyles.Number, CultureInfo.InvariantCulture, out value);
+    }
+
+
+    private string BuildFloatingPreviewText(CalculationProject project, IReadOnlyCollection<string> errors)
+    {
+        var lines = new List<string>();
+
+        if (errors.Count > 0)
+        {
+            lines.Add("⚠ Ungültige Felder: " + string.Join(", ", errors));
+            lines.Add(string.Empty);
+        }
+
+        foreach (var machine in project.MachineUsages)
+        {
+            lines.Add(
+                machine.Name.PadRight(22)
+                + " " + FormatDecimal(machine.RuntimeHours)
+                + " Std.  →  Strom " + FormatMoney(machine.PowerCost)
+                + "  |  Verschleiß " + FormatMoney(machine.WearCost));
+        }
+
+        if (project.MachineUsages.Count > 0)
+        {
+            lines.Add(new string('─', 58));
+        }
+
+        foreach (var material in project.MaterialUsages)
+        {
+            lines.Add(
+                material.Name.PadRight(22)
+                + " " + FormatDecimal(material.Quantity)
+                + " " + material.Unit
+                + "  →  " + FormatMoney(material.Cost));
+        }
+
+        if (project.MaterialUsages.Count > 0)
+        {
+            lines.Add(new string('─', 58));
+        }
+
+        lines.Add("Strom gesamt:".PadRight(28) + FormatMoney(project.PowerCost));
+        lines.Add("Verschleiß gesamt:".PadRight(28) + FormatMoney(project.WearCost));
+        lines.Add("Materialkosten:".PadRight(28) + FormatMoney(project.MaterialCost));
+        lines.Add("Vorbereitungskosten:".PadRight(28) + FormatMoney(project.PreparationCost));
+        lines.Add("Nachbearbeitungskosten:".PadRight(28) + FormatMoney(project.LaborCost));
+        lines.Add("CAD/RE-Kosten:".PadRight(28) + FormatMoney(project.ConstructionCost));
+
+        foreach (var freeCost in project.FreeCostItems)
+        {
+            lines.Add((freeCost.Description + ":").PadRight(28) + FormatMoney(freeCost.Amount));
+        }
+
+        lines.Add(new string('─', 44));
+        lines.Add("Selbstkosten:".PadRight(28) + FormatMoney(project.CostPrice));
+        lines.Add(("Aufschlag (" + FormatDecimal(project.SurchargePercent) + "%):").PadRight(28)
+            + FormatMoney(project.FinalPrice - project.CostPrice));
+        lines.Add(new string('─', 44));
+        lines.Add("Einzelpreis:".PadRight(28) + FormatMoney(project.FinalPrice));
+
+        var quantity = Math.Max(1, project.Quantity);
+        if (quantity > 1)
+        {
+            lines.Add("Stückzahl:".PadRight(28) + quantity + "x");
+            lines.Add(new string('─', 44));
+            lines.Add("Gesamtpreis:".PadRight(28) + FormatMoney(project.FinalPrice * quantity));
+        }
+
+        lines.Add(string.Empty);
+        lines.Add("⟳ Vorschau – noch nicht gespeichert");
+
+        return string.Join(Environment.NewLine, lines);
     }
 
     private readonly record struct MachineState(bool IsSelected, string RuntimeHoursText);
