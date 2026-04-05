@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <Product>Thommy Kalkulator</Product>
+    <Company>Thommy</Company>
+    <Authors>Chris</Authors>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <InformationalVersion>1.0.0</InformationalVersion>
+    <Description>Kalkulationsprogramm für 3D-Druck-Projekte.</Description>
+  </PropertyGroup>
+</Project>

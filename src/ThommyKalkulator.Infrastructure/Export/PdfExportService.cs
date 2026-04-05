@@ -127,10 +127,9 @@ public sealed class PdfExportService : IPdfExportService
 
             table.Header(header =>
             {
-                HeaderCell(header.Cell(), "Projekt-Nr.");
-                HeaderCell(header.Cell(), "Positionsbezeichnung");
-                HeaderCell(header.Cell(), "Einzelpreis");
-                HeaderCell(header.Cell(), "Stück");
+                HeaderCell(header.Cell(), "Material");
+                HeaderCell(header.Cell(), "Menge");
+                HeaderCell(header.Cell(), "Preis / Einheit");
                 HeaderCell(header.Cell(), "Gesamtpreis");
             });
 

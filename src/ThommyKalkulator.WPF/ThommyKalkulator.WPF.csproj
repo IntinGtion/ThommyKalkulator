@@ -6,6 +6,15 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <Product>$(Product)</Product>
+	<AssemblyName>ThommyKalkulator.WPF</AssemblyName>
+    <AssemblyTitle>$(Product)</AssemblyTitle>
+    <Company>$(Company)</Company>
+    <Description>$(Description)</Description>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>false</PublishSingleFile>
+    <PublishReadyToRun>false</PublishReadyToRun>
   </PropertyGroup>
 
   <ItemGroup>

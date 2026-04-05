@@ -6,29 +6,124 @@
              xmlns:vm="clr-namespace:ThommyKalkulator.WPF.ViewModels.Pages"
              mc:Ignorable="d"
              d:DesignHeight="700"
-             d:DesignWidth="1200">
+             d:DesignWidth="1200"
+             d:DataContext="{d:DesignInstance Type=vm:AppearanceViewModel}">
 
-    <UserControl.DataContext>
-        <vm:AppearanceViewModel />
-    </UserControl.DataContext>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-    <Grid Margin="20">
-        <Border Padding="16"
-                Background="{DynamicResource CardBrush}"
-                BorderBrush="{DynamicResource BorderBrush}"
-                BorderThickness="1"
-                CornerRadius="8">
-            <StackPanel>
+            <StackPanel Grid.Row="0" Margin="0,0,0,16">
                 <TextBlock Text="{Binding PageTitle}"
                            FontSize="28"
                            FontWeight="SemiBold"
                            Margin="0,0,0,8" />
                 <TextBlock Text="{Binding PageDescription}"
                            Foreground="{DynamicResource SecondaryTextBrush}"
-                           Margin="0,0,0,16"
                            TextWrapping="Wrap" />
-                <TextBlock Text="Später kommen hier Theme- und Anzeigeoptionen hinein." />
             </StackPanel>
-        </Border>
-    </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="420" />
+                    <ColumnDefinition Width="16" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0"
+                        Padding="16"
+                        Background="{DynamicResource CardBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock Text="Helligkeit / Modus"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,16" />
+
+                        <RadioButton Content="🌙 Dark"
+                                     IsChecked="{Binding DarkModeSelected}"
+                                     Margin="0,0,0,10" />
+                        <RadioButton Content="☀️ Light"
+                                     IsChecked="{Binding LightModeSelected}"
+                                     Margin="0,0,0,10" />
+                        <RadioButton Content="💻 System"
+                                     IsChecked="{Binding SystemModeSelected}"
+                                     Margin="0,0,0,16" />
+
+                        <Button Content="✓ Darstellung anwenden"
+                                Command="{Binding ApplyAppearanceCommand}"
+                                HorizontalAlignment="Left"
+                                Padding="12,8" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2"
+                        Padding="16"
+                        Background="{DynamicResource CardBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock Text="Fenstergröße"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,16" />
+
+                        <Grid Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="160" />
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="160" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0"
+                                       Text="Breite"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,12,0" />
+                            <TextBox Grid.Column="1"
+                                     Text="{Binding WindowWidthText}"
+                                     Padding="8,6"
+                                     Margin="0,0,20,0" />
+
+                            <TextBlock Grid.Column="2"
+                                       Text="Höhe"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,12,0" />
+                            <TextBox Grid.Column="3"
+                                     Text="{Binding WindowHeightText}"
+                                     Padding="8,6" />
+                        </Grid>
+
+                        <Button Content="✓ Fenstergröße anwenden"
+                                Command="{Binding ApplyWindowSizeCommand}"
+                                HorizontalAlignment="Left"
+                                Padding="12,8"
+                                Margin="0,0,0,16" />
+
+                        <TextBlock Text="Die Darstellung wird sofort gespeichert. Im Modus „System“ orientiert sich die App an den Windows-Farbeinstellungen."
+                                   Foreground="{DynamicResource SecondaryTextBrush}"
+                                   TextWrapping="Wrap" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Border Grid.Row="2"
+                    Margin="0,16,0,0"
+                    Padding="12,8"
+                    Background="{DynamicResource SurfaceBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="6">
+                <TextBlock Text="{Binding StatusMessage}"
+                           Foreground="{DynamicResource SecondaryTextBrush}" />
+            </Border>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

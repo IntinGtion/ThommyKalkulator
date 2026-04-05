@@ -1,0 +1,27 @@
+<Project Sdk="WixToolset.Sdk/6.0.2">
+	<PropertyGroup>
+		<OutputType>Package</OutputType>
+		<InstallerPlatform>x64</InstallerPlatform>
+		<Cultures>de-DE</Cultures>
+
+		<PublishProject>$(MSBuildProjectDirectory)\..\..\src\ThommyKalkulator.WPF\ThommyKalkulator.WPF.csproj</PublishProject>
+		<PublishRuntime>win-x64</PublishRuntime>
+		<PublishedAppDir>$(MSBuildProjectDirectory)\..\..\src\ThommyKalkulator.WPF\bin\$(Configuration)\net8.0-windows\$(PublishRuntime)\publish\</PublishedAppDir>
+
+		<OutputName>ThommyKalkulator_$(Version)_x64</OutputName>
+		<DefineConstants>Product=$(Product);Company=$(Company);Version=$(Version);Description=$(Description)</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="WixToolset.UI.wixext" Version="6.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<BindPath Include="$(PublishedAppDir)" BindName="PublishedApp" />
+		<BindVariable Include="WixUILicenseRtf=$(MSBuildProjectDirectory)\InstallerLicense.rtf" />
+	</ItemGroup>
+
+	<Target Name="PublishApplicationFiles" BeforeTargets="BeforeBuild">
+		<Exec Command='dotnet publish &quot;$(PublishProject)&quot; -c $(Configuration) -r $(PublishRuntime) --self-contained true -p:PublishSingleFile=false -p:PublishReadyToRun=false' />
+	</Target>
+</Project>

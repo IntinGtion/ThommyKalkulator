@@ -210,6 +210,25 @@
                             </StackPanel>
                         </GroupBox>
 
+
+                        <GroupBox Header="Konfiguration" Margin="0,0,0,16">
+                            <StackPanel Margin="8">
+                                <TextBlock Text="Alle Daten sichern oder aus einer Backup-Datei wiederherstellen."
+                                           Foreground="{DynamicResource SecondaryTextBrush}"
+                                           TextWrapping="Wrap"
+                                           Margin="0,0,0,12" />
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="📤 Konfiguration exportieren"
+                                            Click="ExportConfigurationButton_OnClick"
+                                            Padding="12,8"
+                                            Margin="0,0,8,0" />
+                                    <Button Content="📥 Konfiguration importieren"
+                                            Click="ImportConfigurationButton_OnClick"
+                                            Padding="12,8" />
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+
                         <Button Content="💾 Globale Einstellungen speichern"
                                 Command="{Binding SaveGlobalSettingsCommand}"
                                 Padding="12,8"

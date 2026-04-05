@@ -5,6 +5,17 @@
     <Project Path="src/ThommyKalkulator.Infrastructure/ThommyKalkulator.Infrastructure.csproj" Id="9072c56d-0c84-47dc-9604-80fe131dab32" />
     <Project Path="src/ThommyKalkulator.WPF/ThommyKalkulator.WPF.csproj" />
   </Folder>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/installer/">
+    <Project Path="installer/ThommyKalkulator.Setup/ThommyKalkulator.Setup.wixproj" Type="b7dd6f7e-def8-4e67-b5b7-07ef123db6f0">
+      <Platform Solution="*|Any CPU" Project="x64" />
+    </Project>
+  </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/ThommyKalkulator.Tests/ThommyKalkulator.Tests.csproj" Id="5cb0208d-2627-4305-b5dd-faa43a593ed0" />
   </Folder>

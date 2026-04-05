@@ -1,28 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using System.ComponentModel;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using ThommyKalkulator.WPF.ViewModels.Pages;
 
-namespace ThommyKalkulator.WPF.Views.Pages
+namespace ThommyKalkulator.WPF.Views.Pages;
+
+/// <summary>
+/// Interaktionslogik für AppearancePage.xaml
+/// </summary>
+public partial class AppearancePage : UserControl
 {
-    /// <summary>
-    /// Interaktionslogik für AppearancePage.xaml
-    /// </summary>
-    public partial class AppearancePage : UserControl
+    public AppearancePage()
     {
-        public AppearancePage()
+        InitializeComponent();
+
+        if (DesignerProperties.GetIsInDesignMode(this))
         {
-            InitializeComponent();
+            DataContext = new AppearanceViewModel();
+            return;
         }
+
+        DataContext = new AppearanceViewModel();
+        App.AppConfigurationChanged += OnAppConfigurationChanged;
+        Unloaded += OnUnloaded;
+    }
+
+    private void OnAppConfigurationChanged(object? sender, AppConfigurationChangedEventArgs e)
+    {
+        if (DataContext is AppearanceViewModel viewModel)
+        {
+            viewModel.LoadFromConfiguration(e.Configuration);
+        }
+    }
+
+    private void OnUnloaded(object sender, System.Windows.RoutedEventArgs e)
+    {
+        App.AppConfigurationChanged -= OnAppConfigurationChanged;
+        Unloaded -= OnUnloaded;
     }
 }

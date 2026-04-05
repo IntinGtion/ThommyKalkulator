@@ -1,0 +1,70 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+  <Package
+      Name="$(var.Product)"
+      Manufacturer="$(var.Company)"
+      Version="$(var.Version)"
+      UpgradeCode="1cd697cf-9794-4e4a-8b41-90daa19958b4"
+      Scope="perMachine">
+
+    <SummaryInformation Description="$(var.Description)" />
+
+    <MajorUpgrade DowngradeErrorMessage="Eine neuere Version von [ProductName] ist bereits installiert." />
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+
+    <StandardDirectory Id="ProgramFiles6432Folder">
+      <Directory Id="CompanyFolder" Name="$(var.Company)">
+        <Directory Id="INSTALLFOLDER" Name="$(var.Product)" />
+      </Directory>
+    </StandardDirectory>
+
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="ApplicationProgramsFolder" Name="$(var.Product)" />
+    </StandardDirectory>
+
+    <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER" />
+
+    <Feature Id="MainFeature" Title="$(var.Product)" Level="1">
+      <ComponentGroupRef Id="PublishedApplicationFiles" />
+      <ComponentRef Id="StartMenuShortcuts" />
+    </Feature>
+  </Package>
+
+  <Fragment>
+    <ComponentGroup Id="PublishedApplicationFiles">
+      <File Id="MainExecutable" Source="!(bindpath.PublishedApp)\ThommyKalkulator.WPF.exe" Directory="INSTALLFOLDER" KeyPath="yes" />
+
+      <Files Include="!(bindpath.PublishedApp)\**" Directory="INSTALLFOLDER">
+        <Exclude Files="!(bindpath.PublishedApp)\ThommyKalkulator.WPF.exe" />
+        <Exclude Files="!(bindpath.PublishedApp)\**\*.pdb" />
+      </Files>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="StartMenuShortcuts" Guid="0fe19aba-0a7e-44d8-a73c-38427ffe9f26">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="$(var.Product)"
+                  Description="Startet $(var.Product)"
+                  Target="[#MainExecutable]"
+                  WorkingDirectory="INSTALLFOLDER" />
+
+        <Shortcut Id="ApplicationUninstallShortcut"
+                  Name="$(var.Product) deinstallieren"
+                  Description="Deinstalliert $(var.Product)"
+                  Target="[System64Folder]msiexec.exe"
+                  Arguments="/x [ProductCode]" />
+
+        <RemoveFolder Id="RemoveApplicationProgramsFolder" Directory="ApplicationProgramsFolder" On="uninstall" />
+
+        <RegistryValue Root="HKMU"
+                       Key="Software\$(var.Company)\$(var.Product)"
+                       Name="Installed"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>
