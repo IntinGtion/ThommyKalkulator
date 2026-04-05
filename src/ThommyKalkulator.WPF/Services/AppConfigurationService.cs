@@ -1,6 +1,7 @@
 using System.IO;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using Microsoft.Win32;
 using System.Windows;
 using Microsoft.Win32;
 using WpfApplication = System.Windows.Application;
@@ -137,7 +138,6 @@ public static class AppearanceManager
         return AppThemeModes.Dark;
     }
 
-    public static void ApplyApplicationAppearance(WpfApplication application, string requestedAppearance)
     {
         ArgumentNullException.ThrowIfNull(application);
 
